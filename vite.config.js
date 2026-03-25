@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   plugins: [react()],
-  // Base path - try root first to see if that fixes the issue
+  // Base path - use relative paths for GitHub Pages compatibility
   base: './',
 }))
