@@ -6,7 +6,6 @@ A modern React.js application for HostScore - an Airbnb listing optimization too
 
 - **Landing Page**: Beautiful, responsive homepage with hero section, features, testimonials, and pricing
 - **Audit Tool**: Interactive listing analysis tool with step-by-step wizard and detailed results
-- **Blog**: Content management system for hosting tips and optimization guides
 - **Contact System**: Contact form with multiple inquiry types
 - **Analytics Integration**: Google Analytics 4 tracking for conversions and user behavior
 - **Responsive Design**: Mobile-first design that works on all devices
@@ -33,8 +32,6 @@ src/
 ├── pages/
 │   ├── Home.jsx               # Landing page
 │   ├── Audit.jsx              # Listing audit tool
-│   ├── Blog.jsx               # Blog listing page
-│   ├── BlogPost.jsx           # Individual blog post
 │   ├── Contact.jsx            # Contact page
 │   ├── Privacy.jsx            # Privacy policy
 │   └── Terms.jsx              # Terms of service
@@ -47,8 +44,6 @@ src/
 │   ├── global.css             # Global styles and CSS variables
 │   ├── home.css               # Home page specific styles
 │   ├── audit.css              # Audit tool styles
-│   ├── blog.css               # Blog page styles
-│   ├── post.css               # Blog post styles
 │   ├── contact.css            # Contact page styles
 │   └── legal.css              # Legal pages styles
 └── assets/                    # Static assets (images, fonts, etc.)
@@ -140,7 +135,6 @@ The application uses CSS custom properties (variables) for easy theming. Update 
 
 ### Content
 
-- **Blog Posts**: Update the `blogPosts` array in `src/pages/Blog.jsx`
 - **Testimonials**: Modify the testimonials in `src/pages/Home.jsx`
 - **Pricing Plans**: Update pricing information in the Home component
 - **Contact Info**: Change contact details in `src/pages/Contact.jsx`

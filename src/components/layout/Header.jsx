@@ -48,15 +48,6 @@ const Header = () => {
         </li>
         <li>
           <Link 
-            to="/blog" 
-            className={isActive('/blog') ? 'active' : ''} 
-            onClick={closeMenu}
-          >
-            Blog
-          </Link>
-        </li>
-        <li>
-          <Link 
             to="/contact" 
             className={isActive('/contact') ? 'active' : ''} 
             onClick={closeMenu}

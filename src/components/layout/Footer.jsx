@@ -32,7 +32,7 @@ const Footer = () => {
             <ul className="footer-links">
               <li><a href="#pricing">Pricing</a></li>
               <li><a href="#waitlist">Join waitlist</a></li>
-              <li><Link to="/blog">Blog</Link></li>
+              <li><Link to="/audit">Free Audit</Link></li>
             </ul>
           </div>
           <div>
