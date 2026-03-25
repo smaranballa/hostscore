@@ -6,6 +6,24 @@ export const joinWaitlist = async (email, source = 'unknown') => {
     return false;
   }
 
+  // Demo mode - simulate successful submission
+  if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+    console.log('Demo mode: Waitlist signup simulated', { email, source });
+    
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Track conversion
+    try {
+      const { trackWaitlistSignup } = await import('./analytics');
+      trackWaitlistSignup(source);
+    } catch {
+      console.log('Analytics not available in demo mode');
+    }
+    
+    return true;
+  }
+
   try {
     const response = await fetch(FORMSPREE_ENDPOINT, {
       method: 'POST',
@@ -36,6 +54,24 @@ export const joinWaitlist = async (email, source = 'unknown') => {
 };
 
 export const submitContactForm = async (formData) => {
+  // Demo mode - simulate successful submission
+  if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+    console.log('Demo mode: Contact form submission simulated', formData);
+    
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Track conversion
+    try {
+      const { trackContactSubmit } = await import('./analytics');
+      trackContactSubmit(formData.subject || 'general');
+    } catch {
+      console.log('Analytics not available in demo mode');
+    }
+    
+    return true;
+  }
+
   try {
     const response = await fetch(FORMSPREE_ENDPOINT, {
       method: 'POST',

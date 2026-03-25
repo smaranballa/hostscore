@@ -7,6 +7,33 @@ const Home = () => {
   const [finalEmail, setFinalEmail] = useState('');
   const [heroSubmitted, setHeroSubmitted] = useState(false);
   const [finalSubmitted, setFinalSubmitted] = useState(false);
+  const [heroLoading, setHeroLoading] = useState(false);
+  const [finalLoading, setFinalLoading] = useState(false);
+
+  // Check for scroll flags when component mounts
+  useEffect(() => {
+    // Check if we need to scroll to pricing section
+    if (sessionStorage.getItem('scrollToPricing') === 'true') {
+      sessionStorage.removeItem('scrollToPricing');
+      setTimeout(() => {
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+    
+    // Check if we need to scroll to waitlist section
+    if (sessionStorage.getItem('scrollToWaitlist') === 'true') {
+      sessionStorage.removeItem('scrollToWaitlist');
+      setTimeout(() => {
+        const waitlistSection = document.getElementById('waitlist');
+        if (waitlistSection) {
+          waitlistSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, []);
 
   // Reveal animation on scroll
   useEffect(() => {
@@ -23,19 +50,29 @@ const Home = () => {
 
   const handleHeroSubmit = async (e) => {
     e.preventDefault();
+    setHeroLoading(true);
+    
     const success = await joinWaitlist(heroEmail, 'hero');
     if (success) {
       setHeroSubmitted(true);
       setHeroEmail('');
+      setHeroLoading(false);
+    } else {
+      setHeroLoading(false);
     }
   };
 
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
+    setFinalLoading(true);
+    
     const success = await joinWaitlist(finalEmail, 'final_cta');
     if (success) {
       setFinalSubmitted(true);
       setFinalEmail('');
+      setFinalLoading(false);
+    } else {
+      setFinalLoading(false);
     }
   };
 
@@ -64,12 +101,33 @@ const Home = () => {
                     className="input" 
                     placeholder="Your email address"
                     required
+                    disabled={heroLoading}
                   />
-                  <button type="submit" className="btn btn-primary">Join waitlist →</button>
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary"
+                    disabled={heroLoading}
+                  >
+                    {heroLoading ? 'Joining...' : 'Join waitlist →'}
+                  </button>
                 </form>
               ) : (
-                <div className="success-banner reveal">
-                  <span>✓</span> You're on the list! We'll be in touch soon.
+                <div 
+                  style={{
+                    background: 'var(--sand)',
+                    border: '1px solid var(--accent)',
+                    padding: '20px 30px',
+                    borderRadius: '12px',
+                    animation: 'successPulse 0.6s ease-out',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{fontSize: '16px', fontWeight: '600', color: 'var(--ink)', marginBottom: '4px'}}>
+                    Thanks for joining the waitlist!
+                  </div>
+                  <div style={{fontSize: '14px', color: 'var(--ink2)'}}>
+                    We will be in touch with you.
+                  </div>
                 </div>
               )}
               <p className="hero-fine reveal">1 free audit · No credit card required · No sign-up friction</p>
@@ -477,12 +535,35 @@ const Home = () => {
                   color:'var(--cream)'
                 }}
                 required
+                disabled={finalLoading}
               />
-              <button type="submit" className="btn btn-primary">Get early access →</button>
+              <button 
+                type="submit" 
+                className="btn btn-primary"
+                disabled={finalLoading}
+              >
+                {finalLoading ? 'Joining...' : 'Get early access →'}
+              </button>
             </form>
           ) : (
-            <div className="success-banner reveal" style={{maxWidth:'420px',margin:'12px auto 0',justifyContent:'center'}}>
-              <span>✓</span> You're on the list! We'll be in touch soon.
+            <div 
+              style={{
+                maxWidth:'420px',
+                margin:'12px auto 0',
+                background: 'rgba(250,247,242,0.15)',
+                border: '1px solid rgba(250,247,242,0.3)',
+                padding: '20px 30px',
+                borderRadius: '12px',
+                animation: 'successPulse 0.6s ease-out',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{fontSize: '16px', fontWeight: '600', color: 'var(--cream)', marginBottom: '4px'}}>
+                Thanks for joining the waitlist!
+              </div>
+              <div style={{fontSize: '13px', color: 'rgba(250,247,242,0.7)'}}>
+                We will be in touch with you.
+              </div>
             </div>
           )}
           <p className="reveal" style={{fontSize:'12px',color:'rgba(250,247,242,.3)',marginTop:'14px'}}>No credit card required · First audit free · Cancel anytime</p>

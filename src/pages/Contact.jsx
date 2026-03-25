@@ -12,7 +12,6 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Reveal animation on scroll
   useEffect(() => {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => { 
@@ -43,16 +42,6 @@ const Contact = () => {
     setIsSubmitting(false);
   };
 
-  const subjectOptions = [
-    'General inquiry',
-    'Partnership opportunity',
-    'Press inquiry',
-    'Technical support',
-    'Feature request',
-    'Billing question',
-    'Other'
-  ];
-
   return (
     <div className="contact-page">
       <div className="page-hero">
@@ -60,7 +49,8 @@ const Contact = () => {
           <span className="section-label">Get in touch</span>
           <h1>We'd love to hear<br />from you.</h1>
           <p className="lead">
-            Questions about HostScore? Want to partner with us? Just want to say hello? Drop us a line.
+            Questions about HostScore? Want to partner with us?
+            Just want to say hello? Drop us a line.
           </p>
         </div>
       </div>
@@ -68,11 +58,10 @@ const Contact = () => {
       <section className="section-sm">
         <div className="container">
           <div className="contact-grid">
-            {/* Contact form */}
-            <div className="contact-form-card card reveal">
+            <div className="contact-form-card reveal">
               <div className="card-body">
                 <h2>Send us a message</h2>
-                <p style={{color:'var(--muted)',marginBottom:'24px'}}>
+                <p style={{color:'var(--ink2)', fontSize: '14px', marginBottom:'24px', lineHeight: '1.6'}}>
                   We typically respond within 24 hours during business days.
                 </p>
 
@@ -115,9 +104,11 @@ const Contact = () => {
                         required
                       >
                         <option value="">Select a subject</option>
-                        {subjectOptions.map(option => (
-                          <option key={option} value={option}>{option}</option>
-                        ))}
+                        <option value="General inquiry">General inquiry</option>
+                        <option value="Partnership opportunity">Partnership opportunity</option>
+                        <option value="Press inquiry">Press inquiry</option>
+                        <option value="Feature request">Feature request</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
 
@@ -127,7 +118,7 @@ const Contact = () => {
                         id="cf-message"
                         className="input"
                         placeholder="Tell us how we can help..."
-                        rows="6"
+                        rows="5"
                         value={formData.message}
                         onChange={(e) => handleInputChange('message', e.target.value)}
                         required
@@ -140,7 +131,7 @@ const Contact = () => {
                       style={{width:'100%'}}
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Sending...' : 'Send message →'}
+                      {isSubmitting ? 'Sending...' : 'Send message'}
                     </button>
                   </form>
                 ) : (
@@ -159,9 +150,8 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Contact info */}
             <div className="contact-info reveal reveal-d1">
-              <div className="contact-info-card card">
+              <div className="contact-info-card">
                 <div className="card-body">
                   <h3>Other ways to reach us</h3>
                   
@@ -177,42 +167,37 @@ const Contact = () => {
                     <div className="contact-icon">💬</div>
                     <div>
                       <strong>Live chat</strong>
-                      <p>Available on our website<br />Mon-Fri, 9am-6pm EST</p>
+                      <p>Mon – Fri, 9 am – 6 pm EST</p>
                     </div>
                   </div>
 
                   <div className="contact-method">
-                    <div className="contact-icon">🐦</div>
+                    <div className="contact-icon">𝕏</div>
                     <div>
-                      <strong>Twitter</strong>
-                      <p>@hostscore<br />For quick questions</p>
+                      <strong>Twitter / X</strong>
+                      <p>@hostscore</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="faq-card card">
+              <div className="faq-card">
                 <div className="card-body">
                   <h3>Quick answers</h3>
                   
                   <div className="faq-item">
-                    <strong>How does the free audit work?</strong>
-                    <p>Paste your listing details, and we'll analyze what's costing you bookings in about 60 seconds.</p>
+                    <strong>How does HostScore work?</strong>
+                    <p>Enter your listing details and we analyze what's costing you bookings in about 60 seconds.</p>
                   </div>
 
                   <div className="faq-item">
                     <strong>Do you store my listing data?</strong>
-                    <p>No. Your listing information is analyzed and then deleted. We don't store or share your data.</p>
+                    <p>No. Your information is analyzed and then deleted. We don't store or share your data.</p>
                   </div>
 
                   <div className="faq-item">
-                    <strong>When will paid plans be available?</strong>
-                    <p>We're currently in early access. Join the waitlist to be notified when we launch.</p>
-                  </div>
-
-                  <div className="faq-item">
-                    <strong>Can you help with multiple listings?</strong>
-                    <p>Yes! Our Pro and Agency plans are designed for hosts with multiple properties.</p>
+                    <strong>When will paid plans launch?</strong>
+                    <p>We're currently in early access. Join the waitlist to get notified when we launch.</p>
                   </div>
                 </div>
               </div>

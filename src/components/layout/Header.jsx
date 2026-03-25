@@ -13,6 +13,58 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const handlePricingClick = (e) => {
+    e.preventDefault();
+    closeMenu();
+    
+    // If not on home page, navigate to home first then scroll
+    if (location.pathname !== '/') {
+      // Navigate to home page and then scroll to pricing
+      window.location.href = '/';
+      // Set a flag to scroll to pricing after navigation
+      sessionStorage.setItem('scrollToPricing', 'true');
+      return;
+    }
+    
+    // Scroll to pricing section on home page
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleHomeClick = (e) => {
+    closeMenu();
+    
+    // If already on home page, scroll to top
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // If on other page, let normal navigation happen (will scroll to top via ScrollToTop component)
+  };
+
+  const handleWaitlistClick = (e) => {
+    e.preventDefault();
+    closeMenu();
+    
+    // If not on home page, navigate to home first then scroll
+    if (location.pathname !== '/') {
+      // Navigate to home page and then scroll to waitlist
+      window.location.href = '/';
+      // Set a flag to scroll to waitlist after navigation
+      sessionStorage.setItem('scrollToWaitlist', 'true');
+      return;
+    }
+    
+    // Scroll to waitlist section on home page
+    const waitlistSection = document.getElementById('waitlist');
+    if (waitlistSection) {
+      waitlistSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -33,7 +85,7 @@ const Header = () => {
 
   return (
     <nav className="nav">
-      <Link to="/" className="nav-logo">
+      <Link to="/" className="nav-logo" onClick={handleHomeClick}>
         Host<span>Score</span>
       </Link>
       <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`} id="nav-links">
@@ -41,7 +93,7 @@ const Header = () => {
           <Link 
             to="/" 
             className={isActive('/') ? 'active' : ''} 
-            onClick={closeMenu}
+            onClick={handleHomeClick}
           >
             Home
           </Link>
@@ -56,21 +108,12 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <Link 
-            to="/audit" 
-            className={isActive('/audit') ? 'active' : ''} 
-            onClick={closeMenu}
-          >
-            Free Audit
-          </Link>
-        </li>
-        <li>
-          <a href="#pricing" onClick={closeMenu}>
+          <a href="#pricing" onClick={handlePricingClick}>
             Pricing
           </a>
         </li>
         <li>
-          <a href="#waitlist" className="nav-cta btn" onClick={closeMenu}>
+          <a href="#waitlist" className="nav-cta btn" onClick={handleWaitlistClick}>
             Get early access
           </a>
         </li>

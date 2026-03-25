@@ -5,13 +5,19 @@ import { joinWaitlist } from '../../utils/forms';
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    
     const success = await joinWaitlist(email, 'footer');
     if (success) {
       setIsSubmitted(true);
       setEmail('');
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
     }
   };
 
@@ -30,9 +36,38 @@ const Footer = () => {
           <div>
             <div className="footer-col-title">Product</div>
             <ul className="footer-links">
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#waitlist">Join waitlist</a></li>
-              <li><Link to="/audit">Free Audit</Link></li>
+              <li>
+                <a 
+                  href="#pricing" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (window.location.pathname !== '/') {
+                      window.location.href = '/';
+                      sessionStorage.setItem('scrollToPricing', 'true');
+                    } else {
+                      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#waitlist" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (window.location.pathname !== '/') {
+                      window.location.href = '/';
+                      sessionStorage.setItem('scrollToWaitlist', 'true');
+                    } else {
+                      document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Join waitlist
+                </a>
+              </li>
             </ul>
           </div>
           <div>
@@ -48,33 +83,51 @@ const Footer = () => {
             <p style={{ fontSize: '13px', color: 'rgba(250,247,242,.45)', marginBottom: '12px', lineHeight: '1.6' }}>
               Get hosting tips and product updates in your inbox.
             </p>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="input"
-                placeholder="Email address"
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="input"
+                  placeholder="Email address"
+                  style={{
+                    background: 'rgba(255,255,255,.07)',
+                    borderColor: 'rgba(255,255,255,.15)',
+                    color: 'var(--cream)',
+                    fontSize: '13px',
+                    padding: '9px 12px'
+                  }}
+                  required
+                  disabled={isLoading}
+                />
+                <button 
+                  type="submit" 
+                  className="btn btn-primary" 
+                  style={{ padding: '9px 16px', fontSize: '13px' }}
+                  disabled={isLoading}
+                >
+                  {isLoading ? '...' : '→'}
+                </button>
+              </form>
+            ) : (
+              <div 
                 style={{
-                  background: 'rgba(255,255,255,.07)',
-                  borderColor: 'rgba(255,255,255,.15)',
-                  color: 'var(--cream)',
-                  fontSize: '13px',
-                  padding: '9px 12px'
+                  background: 'rgba(250,247,242,0.1)',
+                  border: '1px solid rgba(250,247,242,0.25)',
+                  padding: '12px 16px',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                  animation: 'successPulse 0.6s ease-out',
+                  fontSize: '13px'
                 }}
-                required
-              />
-              <button 
-                type="submit" 
-                className="btn btn-primary" 
-                style={{ padding: '9px 16px', fontSize: '13px' }}
               >
-                →
-              </button>
-            </form>
-            {isSubmitted && (
-              <div className="success-banner" style={{ marginTop: '8px', fontSize: '12px' }}>
-                <span>✓</span> Subscribed!
+                <div style={{fontWeight: '600', color: 'var(--cream)', marginBottom: '2px'}}>
+                  Thanks for joining the waitlist!
+                </div>
+                <div style={{color: 'rgba(250,247,242,0.6)', fontSize: '12px'}}>
+                  We will be in touch with you.
+                </div>
               </div>
             )}
           </div>
