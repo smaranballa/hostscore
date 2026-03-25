@@ -41,9 +41,11 @@ const Footer = () => {
                   href="#pricing" 
                   onClick={(e) => {
                     e.preventDefault();
-                    if (window.location.pathname !== '/') {
-                      window.location.href = '/';
+                    const basePath = import.meta.env.BASE_URL;
+                    const isHome = window.location.pathname === basePath || window.location.pathname === basePath.slice(0, -1);
+                    if (!isHome) {
                       sessionStorage.setItem('scrollToPricing', 'true');
+                      window.location.href = basePath;
                     } else {
                       document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
                     }
@@ -57,9 +59,11 @@ const Footer = () => {
                   href="#waitlist" 
                   onClick={(e) => {
                     e.preventDefault();
-                    if (window.location.pathname !== '/') {
-                      window.location.href = '/';
+                    const basePath = import.meta.env.BASE_URL;
+                    const isHome = window.location.pathname === basePath || window.location.pathname === basePath.slice(0, -1);
+                    if (!isHome) {
                       sessionStorage.setItem('scrollToWaitlist', 'true');
+                      window.location.href = basePath;
                     } else {
                       document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
                     }

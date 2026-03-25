@@ -13,20 +13,22 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const basePath = import.meta.env.BASE_URL;
+
+  const isHomePage = () => {
+    return location.pathname === '/' || location.pathname === '';
+  };
+
   const handlePricingClick = (e) => {
     e.preventDefault();
     closeMenu();
     
-    // If not on home page, navigate to home first then scroll
-    if (location.pathname !== '/') {
-      // Navigate to home page and then scroll to pricing
-      window.location.href = '/';
-      // Set a flag to scroll to pricing after navigation
+    if (!isHomePage()) {
       sessionStorage.setItem('scrollToPricing', 'true');
+      window.location.href = basePath;
       return;
     }
     
-    // Scroll to pricing section on home page
     const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
@@ -36,28 +38,22 @@ const Header = () => {
   const handleHomeClick = (e) => {
     closeMenu();
     
-    // If already on home page, scroll to top
-    if (location.pathname === '/') {
+    if (isHomePage()) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    // If on other page, let normal navigation happen (will scroll to top via ScrollToTop component)
   };
 
   const handleWaitlistClick = (e) => {
     e.preventDefault();
     closeMenu();
     
-    // If not on home page, navigate to home first then scroll
-    if (location.pathname !== '/') {
-      // Navigate to home page and then scroll to waitlist
-      window.location.href = '/';
-      // Set a flag to scroll to waitlist after navigation
+    if (!isHomePage()) {
       sessionStorage.setItem('scrollToWaitlist', 'true');
+      window.location.href = basePath;
       return;
     }
     
-    // Scroll to waitlist section on home page
     const waitlistSection = document.getElementById('waitlist');
     if (waitlistSection) {
       waitlistSection.scrollIntoView({ behavior: 'smooth' });

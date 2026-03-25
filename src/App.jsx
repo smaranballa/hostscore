@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <div className="App">
         <ScrollToTop />
         <Header />
