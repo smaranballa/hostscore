@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAuditLogic } from '../hooks/useAuditLogic';
 import '../styles/audit.css';
 
@@ -15,13 +15,9 @@ const Audit = () => {
     downloadPDF
   } = useAuditLogic();
 
-  const [titleCount, setTitleCount] = useState(0);
-  const [descCount, setDescCount] = useState(0);
-
-  useEffect(() => {
-    setTitleCount(formData.title.length);
-    setDescCount(formData.desc.length);
-  }, [formData.title, formData.desc]);
+  // Calculate counts directly from formData
+  const titleCount = formData.title.length;
+  const descCount = formData.desc.length;
 
   const handleInputChange = (field, value) => {
     updateFormData({ [field]: value });
